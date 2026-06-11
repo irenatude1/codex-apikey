@@ -1,0 +1,367 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Codex 配置 API Key 教程：中转站注册、密钥创建与覆盖配置完整指南</title>
+  <meta name="description" content="Codex API Key 配置教程，面向国内用户，介绍 Codex 中转站注册、密钥创建、分组选择、覆盖配置脚本、Codex CLI/App/VS Code 插件接入方法。" />
+
+  <style>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", Arial, sans-serif;
+      line-height: 1.8;
+      color: #222;
+      background: #f6f8fa;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .article {
+      background: #fff;
+      padding: 36px;
+      border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    h1 {
+      font-size: 32px;
+      line-height: 1.35;
+      margin-bottom: 16px;
+      color: #111;
+    }
+
+    h2 {
+      margin-top: 42px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      font-size: 24px;
+    }
+
+    h3 {
+      margin-top: 28px;
+      font-size: 20px;
+    }
+
+    p {
+      margin: 14px 0;
+    }
+
+    ul, ol {
+      padding-left: 24px;
+    }
+
+    a {
+      color: #0969da;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 5px;
+      font-family: Consolas, Monaco, monospace;
+    }
+
+    pre {
+      background: #0d1117;
+      color: #f0f6fc;
+      padding: 16px 18px;
+      border-radius: 10px;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    pre code {
+      background: transparent;
+      padding: 0;
+      color: inherit;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      margin: 18px 0;
+    }
+
+    .intro {
+      padding: 16px 20px;
+      background: #f0f6ff;
+      border-left: 4px solid #0969da;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .notice {
+      padding: 16px 20px;
+      background: #fff8e1;
+      border-left: 4px solid #f59e0b;
+      border-radius: 8px;
+      margin: 24px 0;
+    }
+
+    .card {
+      padding: 18px 20px;
+      background: #f9fafb;
+      border: 1px solid #e5e7eb;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+
+    .steps {
+      padding: 18px 20px;
+      background: #f9fafb;
+      border-radius: 10px;
+      border: 1px solid #e5e7eb;
+      margin: 18px 0;
+    }
+
+    footer {
+      margin-top: 42px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .article {
+        padding: 24px 18px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      h2 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="container">
+    <article class="article">
+      <h1>Codex 配置 API Key 教程：中转站注册、密钥创建与覆盖配置完整指南</h1>
+
+      <div class="intro">
+        本教程面向国内用户，主要介绍如何为 <strong>Codex CLI、Codex App、VS Code Codex 插件</strong> 配置 API Key，并通过中转站完成覆盖配置。
+      </div>
+
+      <h2>01. Codex 中转站地址</h2>
+
+      <p>
+        本文使用的 dkai-codex 中转站地址如下，该站点主要面向 Codex、Claude Code 等编程工具调用场景。
+      </p>
+
+      <div class="card">
+        <strong>dkai-codex 中转站注册地址：</strong><br />
+        <a href="https://codex.dakeai.cc/register?promo=DKAI" target="_blank" rel="nofollow noopener noreferrer">
+          https://codex.dakeai.cc/register?promo=DKAI
+        </a>
+      </div>
+
+      <p>
+        如果你还有 OpenClaw 或其他支持第三方自定义 API 接入的 Agent、AI 程序调用需求，也可以使用 dkapi。
+      </p>
+
+      <div class="card">
+        <strong>dkapi 通用 API 中转站：</strong><br />
+        <a href="https://api.dakeai.cc/" target="_blank" rel="nofollow noopener noreferrer">
+          https://api.dakeai.cc/
+        </a>
+      </div>
+
+      <p>
+        dkapi 支持多种常见兼容协议，一个 Key 可以调用多款大模型。使用时通常只需要根据兼容协议替换 URL 和 Key 即可。
+      </p>
+
+      <div class="card">
+        <strong>Codex App 配置画图 API 教程：</strong><br />
+        <a href="https://dk82.com/714.html" target="_blank" rel="nofollow noopener noreferrer">
+          https://dk82.com/714.html
+        </a>
+      </div>
+
+      <div class="notice">
+        注册后系统通常会赠送一定余额，可用于免费体验。建议先测试是否满足自身需求，再决定是否付费。
+      </div>
+
+      <h2>02. 使用中转站前需要准备什么？</h2>
+
+      <p>中转站使用主要分为两个关键步骤：</p>
+
+      <ol>
+        <li>安装对应工具平台，例如 Codex App、Codex CLI、VS Code Codex 插件或 Claude Code。</li>
+        <li>执行覆盖配置，让工具调用新的 API Key 和中转接口地址。</li>
+      </ol>
+
+      <p>如果你已经安装过相关工具，可以跳过安装步骤，直接进行覆盖配置。</p>
+
+      <div class="card">
+        <strong>Codex Desktop App 下载安装与配置教程：</strong><br />
+        <a href="https://dk82.com/635.html" target="_blank" rel="nofollow noopener noreferrer">
+          https://dk82.com/635.html
+        </a>
+      </div>
+
+      <div class="card">
+        <strong>VS Code Codex 插件安装教程：</strong><br />
+        <a href="https://zhuanlan.zhihu.com/p/2035752399952950892" target="_blank" rel="nofollow noopener noreferrer">
+          https://zhuanlan.zhihu.com/p/2035752399952950892
+        </a>
+      </div>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd202114-1024x588.png" alt="dkai-codex 配置 API Key 设置中转站教程" />
+
+      <h2>03. 注册并创建 API 密钥</h2>
+
+      <p>
+        注册并登录中转站后，进入 API 密钥页面，创建一个新的 API Key。
+      </p>
+
+      <div class="steps">
+        <ol>
+          <li>打开 API 密钥页面。</li>
+          <li>点击创建密钥。</li>
+          <li>填写密钥名称。</li>
+          <li>选择对应分组。</li>
+          <li>保存并生成 API Key。</li>
+        </ol>
+      </div>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd200429-1024x450.png" alt="创建 API 密钥界面" />
+
+      <h2>04. 创建密钥时分组怎么选？</h2>
+
+      <p>
+        密钥名称可以自定义填写，但 <strong>分组必须选择正确</strong>。不同分组对应不同模型和工具。
+      </p>
+
+      <ul>
+        <li><strong>Codex 分组：</strong>适合 Codex CLI、Codex App、VS Code Codex 插件等工具。</li>
+        <li><strong>Claude 分组：</strong>适合 Claude Code 相关工具。</li>
+      </ul>
+
+      <p>
+        如果你要配置的是 Codex，建议选择 <strong>Codex 分组</strong>。
+      </p>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd200609-1024x915.png" alt="分组选择说明" />
+
+      <h2>05. 使用密钥并获取覆盖配置脚本</h2>
+
+      <p>
+        以 Codex 为例，选择 Codex 分组填写信息并创建密钥。随后在密钥列表中找到刚刚创建的密钥，点击右侧的 <strong>使用密钥</strong>。
+      </p>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd200959-1024x213.png" alt="使用密钥入口" />
+
+      <p>
+        进入使用密钥页面后，根据你的操作系统选择对应方法。
+      </p>
+
+      <ul>
+        <li>如果未安装工具，先执行安装步骤。</li>
+        <li>如果已经安装工具，可以直接执行覆盖配置。</li>
+      </ul>
+
+      <h2>06. 执行覆盖配置脚本</h2>
+
+      <p>
+        覆盖配置是整个教程中最关键的一步。安装完成后，如果不覆盖配置，工具通常无法正常调用接口。
+      </p>
+
+      <div class="steps">
+        <ol>
+          <li>在“使用密钥”页面找到覆盖配置脚本。</li>
+          <li>点击复制脚本。</li>
+          <li>打开终端、CMD 或 PowerShell。</li>
+          <li>粘贴脚本并执行。</li>
+          <li>等待提示配置成功。</li>
+          <li>重启 Codex CLI、Codex App 或 VS Code Codex 插件。</li>
+        </ol>
+      </div>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd201150-1024x691.png" alt="配置脚本界面" />
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd201411-1024x465.png" alt="终端执行示例" />
+
+      <h2>07. 启动 Codex CLI 测试</h2>
+
+      <p>
+        安装并覆盖配置完成后，可以启动 Codex CLI 进行测试。
+      </p>
+
+      <ul>
+        <li>macOS 用户：打开 Terminal。</li>
+        <li>Linux 用户：打开终端。</li>
+        <li>Windows 用户：打开 CMD 或 PowerShell。</li>
+      </ul>
+
+      <p>然后输入：</p>
+
+      <pre><code>codex</code></pre>
+
+      <p>
+        按回车后即可启动 Codex CLI。第一次进入时，可能会出现几个提示，一般直接按回车即可。
+      </p>
+
+      <p>启动成功后，可以直接输入你的需求，例如：</p>
+
+      <pre><code>帮我写一个简单的个人博客首页</code></pre>
+
+      <p>或者：</p>
+
+      <pre><code>帮我检查这个 Python 脚本为什么报错</code></pre>
+
+      <img src="https://dk82.com/wp-content/uploads/2026/03/d2b5ca33bd174305-1024x665.png" alt="Codex CLI 启动示例" />
+
+      <h2>08. 配置完成后可以做什么？</h2>
+
+      <p>配置完成后，你可以使用 Codex 完成很多编程相关任务，例如：</p>
+
+      <ul>
+        <li>生成网页代码</li>
+        <li>修改已有项目</li>
+        <li>解释代码逻辑</li>
+        <li>排查报错原因</li>
+        <li>重构代码结构</li>
+        <li>编写脚本和自动化工具</li>
+        <li>辅助完成网站、小程序、桌面应用等项目</li>
+      </ul>
+
+      <div class="notice">
+        如果你不知道怎么使用，也可以直接问 Codex，例如：“我完全不会写代码，想做一个简单的网站，你能一步步教我吗？”
+      </div>
+
+      <h2>09. 总结流程</h2>
+
+      <p>完整流程如下：</p>
+
+      <pre><code>注册中转站 → 创建 API 密钥 → 选择 Codex 分组 → 点击使用密钥 → 复制覆盖配置脚本 → 终端执行 → 重启工具 → 开始使用</code></pre>
+
+      <p>
+        完成以上步骤后，Codex CLI、Codex App 或 VS Code Codex 插件就可以正常调用中转 API 使用了。
+      </p>
+
+      <footer>
+        本页面仅用于 Codex API Key 配置与中转站设置教程整理，请以实际平台说明和官方工具提示为准。
+      </footer>
+    </article>
+  </main>
+</body>
+</html>
+```
